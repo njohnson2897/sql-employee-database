@@ -52,6 +52,18 @@ function initPrompt() {
                         initPrompt() 
                     }
                     })
+            // } else if (response.menu  ===  'View all employees') {
+            //     const sql = 'SELECT * FROM employee'
+            //     pool.query(sql, (err, queryResult) => {
+            //         if (err) {
+            //             console.log("Error displaying employee data")
+            //             return;
+            //         } else {
+            //             const rows = queryResult.rows;
+            //             console.table(rows);
+            //             initPrompt() 
+            //         }
+            //         })
             }
         });
         
