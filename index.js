@@ -40,8 +40,21 @@ function initPrompt() {
                         initPrompt() 
                     }
                     })
+            } else if (response.menu  ===  'View all roles') {
+                const sql = 'SELECT * FROM role'
+                pool.query(sql, (err, queryResult) => {
+                    if (err) {
+                        console.log("Error displaying role data")
+                        return;
+                    } else {
+                        const rows = queryResult.rows;
+                        console.table(rows);
+                        initPrompt() 
+                    }
+                    })
             }
         });
+        
 }
 
 
