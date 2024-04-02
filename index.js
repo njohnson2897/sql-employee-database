@@ -1,5 +1,5 @@
 const { Pool }  = require('pg');
-const Inquirer = require('inquirer');
+const inquirer = require('inquirer');
 
 const pool = new Pool(
     {
@@ -8,19 +8,43 @@ const pool = new Pool(
         host: 'localhost',
         database: 'organization_db'
     },
-    console.log(`Connected to the organization_db database.`)
 )
 
+pool.connect()
+    .then(() => {
+        console.log('Connected to the organization_db database.');
+        initPrompt();
+        });
 
-Inquirer
-    .prompt([
-        {
-            type: 'list',
-            message: 'What would you like to do?',
-            name: 'menu',
-            choices: ['View all departments', 'View all roles', 'View all employees',
-            'Add a department', 'Add a role', 'Add an employee', 'Update an employee role'],
-        }
-    ]
-    );
+function initPrompt() {
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                message: 'What would you like to do?',
+                name: 'menu',
+                choices: ['View all departments', 'View all roles', 'View all employees',
+                'Add a department', 'Add a role', 'Add an employee', 'Update an employee role'],
+            }
+        ])
+        // .then((response) => {
+        //     if (response.menu  ===  'View all departments') {
+        //         const sql = 'SELECT * FROM department'
+        //         pool.query(sql, (err, queryResult) => {
+        //             if (err) {
+        //                 console.log("Error displaying department data")
+        //                 return;
+        //             } else {
+        //                 const rows = queryResult.rows
+        //                 console.table(rows)
+        //                 initPrompt() }
+        //             })
+        //     }
+        // });
+}
+
+
+
+
+
 
