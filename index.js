@@ -27,20 +27,21 @@ function initPrompt() {
                 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role'],
             }
         ])
-        // .then((response) => {
-        //     if (response.menu  ===  'View all departments') {
-        //         const sql = 'SELECT * FROM department'
-        //         pool.query(sql, (err, queryResult) => {
-        //             if (err) {
-        //                 console.log("Error displaying department data")
-        //                 return;
-        //             } else {
-        //                 const rows = queryResult.rows
-        //                 console.table(rows)
-        //                 initPrompt() }
-        //             })
-        //     }
-        // });
+        .then((response) => {
+            if (response.menu  ===  'View all departments') {
+                const sql = 'SELECT * FROM department'
+                pool.query(sql, (err, queryResult) => {
+                    if (err) {
+                        console.log("Error displaying department data")
+                        return;
+                    } else {
+                        const rows = queryResult.rows;
+                        console.table(rows);
+                        initPrompt() 
+                    }
+                    })
+            }
+        });
 }
 
 
