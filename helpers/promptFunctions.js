@@ -68,6 +68,16 @@ function addDepartment(dbConnection, promptCallback) {
 };
 
 function addRole(dbConnection, promptCallback) {
+    const sql =  'SELECT name FROM department';
+
+    dbConnection.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error gathering departments')
+            return;
+        }
+
+    const departmentChoices = results.rows
+    
     inquirer
         .prompt([
             {
@@ -78,13 +88,14 @@ function addRole(dbConnection, promptCallback) {
             {
                 type: 'input',
                 name: 'roleSalary',
-                message: 'Enter a name for the role'
+                message: 'Enter a salary for the role'
             },
-            // {
-            //     type: 'input',
-            //     name: 'roleDepartment',
-            //     message: ''
-            // },
+            {
+                type: 'list',
+                name: 'roleDepartment',
+                message: 'Choose the department that this role will belong to',
+                choices: departmentChoices
+            },
         ])
         .then((response) =>  {
         const roleTitle = response.roleTitle;
@@ -98,6 +109,7 @@ function addRole(dbConnection, promptCallback) {
                 console.log('Role added successfully.');
             }
             promptCallback();
+            });
         });
     });
 };
@@ -115,16 +127,18 @@ function addEmployee(dbConnection, promptCallback) {
                 name: 'employeeLastName',
                 message: 'Enter a name for the role'
             },
-            // {
-            //     type: 'input',
-            //     name: 'employeeRole',
-            //     message: ''
-            // },
-            // {
-            //     type: 'input',
-            //     name: 'employeeManager',
-            //     message: ''
-            // },
+            {
+                type: 'list',
+                name: 'employeeRole',
+                message: 'Choose the role that this employee will fulfill',
+                choices: []
+            },
+            {
+                type: 'input',
+                name: 'employeeManager',
+                message: 'Choose the manager of this employee',
+                choices: []
+            },
         ])
         .then((response) =>  {
         const employeeFirstName = response.employeeFirstName;
