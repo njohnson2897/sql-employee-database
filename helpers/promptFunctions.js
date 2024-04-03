@@ -178,24 +178,46 @@ function addEmployee(dbConnection, promptCallback) {
 };
 
 function updateEmployeeRole(dbConnection, promptCallback) {
+    const sql =  `SELECT CONCAT(first_name, ' ', last_name) AS name FROM employee`;
+
+    dbConnection.query(sql, (err, data) => {
+        if (err) {
+            console.error('Error gathering employees')
+            return;
+        }
+
+    const employeeChoices = data.rows
+
+    const sql2 =  `SELECT title AS name FROM role`;
+
+    dbConnection.query(sql2, (err, data) => {
+        if (err) {
+            console.error('Error gathering roles')
+            return;
+        }
+
+    const roleChoices = data.rows
+
     inquirer
         .prompt([
         {
-            type: 'input',
-            name: 'id',
-            message: 'Enter the ID number of the employee that you would like to update'
+            type: 'list',
+            name: 'employeeList',
+            message: 'Choose the employee to update',
+            choices: employeeChoices
         },
         {
-            type: 'input',
+            type: 'list',
             name: 'newRole',
-            message: 'Enter the name of the new role'
+            message: 'Choose a role to assign to the selected employee',
+            choices: roleChoices
         }
         ])
         .then((response) => {
-            const id = response.id;
+            const employee = response.employeeList;
             const newRole = response.newRole;
-            const sql = 'UPDATE employee SET NAME = $1 WHERE id = $2';
-            dbConnection.query(sql, [newRole, id], (err, queryResult => {
+            const sql = 'UPDATE employee SET role_id = $1 WHERE id = $2';
+            dbConnection.query(sql, [newRole, employee], (err, queryResult => {
                 if (err) {
                     console.error('Error updating employee information');
                 } else {
@@ -204,6 +226,8 @@ function updateEmployeeRole(dbConnection, promptCallback) {
                 promptCallback();
             }));
         });
+    });
+    });
 };
 
 
