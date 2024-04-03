@@ -179,7 +179,7 @@ function addEmployee(dbConnection, promptCallback) {
 };
 
 function updateEmployeeRole(dbConnection, promptCallback) {
-    const sql =  `SELECT CONCAT(first_name, ' ', last_name) AS name FROM employee`;
+    const sql =  `SELECT id AS value, CONCAT(first_name, ' ', last_name) AS name FROM employee`;
 
     dbConnection.query(sql, (err, data) => {
         if (err) {
@@ -189,7 +189,7 @@ function updateEmployeeRole(dbConnection, promptCallback) {
 
     const employeeChoices = data.rows
 
-    const sql2 =  `SELECT title AS name FROM role`;
+    const sql2 =  `SELECT id AS value, title AS name FROM role`;
 
     dbConnection.query(sql2, (err, data) => {
         if (err) {
