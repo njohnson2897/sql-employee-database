@@ -29,52 +29,30 @@ function initPrompt() {
         ])
         .then((response) => {
             if (response.menu  ===  'View all departments') {
-                const sql = 'SELECT * FROM department'
-                pool.query(sql, (err, queryResult) => {
-                    if (err) {
-                        console.log("Error displaying department data")
-                        return;
-                    } else {
-                        const rows = queryResult.rows;
-                        console.table(rows);
-                        initPrompt() 
-                    }
-                    })
+                viewAllDepartments();
+                initPrompt();
             } else if (response.menu  ===  'View all roles') {
-                const sql = 'SELECT * FROM role'
-                pool.query(sql, (err, queryResult) => {
-                    if (err) {
-                        console.log("Error displaying role data")
-                        return;
-                    } else {
-                        const rows = queryResult.rows;
-                        console.table(rows);
-                        initPrompt() 
-                    }
-                    })
-            // } else if (response.menu === 'View all employees') {
-            //     const sql = 'SELECT * FROM employee'
-            //     pool.query(sql, (err, queryResult) => {
-            //         if (err) {
-            //             console.log("Error displaying employee data")
-            //             return;
-            //         } else {
-            //             const rows = queryResult.rows;
-            //             console.table(rows);
-            //             initPrompt() 
-            //         }
-            //         })
-            // } else if (response.menu === 'Add a department') {
+                viewAllRoles();
+                initPrompt();
+            } else if (response.menu === 'View all employees') {
+                viewAllEmployees();
+                initPrompt();
+            } else if (response.menu === 'Add a department') {
 
-            // } else if (response.menu === 'Add a role') {
 
-            // } else if (response.menu === 'Add an employee') {
+            } else if (response.menu === 'Add a role') {
+                const sql = 'SELECT * FROM employee'
 
-            // } else if (response.menu === 'Add a department') {
+            } else if (response.menu === 'Add an employee') {
+                const sql = 'SELECT * FROM employee'
 
-            // } else if (response.menu === 'Update an employee role') {
+            } else if (response.menu === 'Add a department') {
+                const sql = 'SELECT * FROM employee'
 
-            // }
+            } else if (response.menu === 'Update an employee role') {
+                const sql = 'SELECT * FROM employee'
+
+            }
         });
         
 }
