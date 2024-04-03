@@ -137,7 +137,33 @@ function addEmployee() {
     });
 };
 
-
+function updateEmployeeRole() {
+    inquirer
+        .prompt([
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Enter the ID number of the employee that you would like to update'
+        },
+        {
+            type: 'input',
+            name: 'newRole',
+            message: 'Enter the name of the new role'
+        }
+        ])
+        .then((response) => {
+            const id = response.id;
+            const newRole = response.newRole;
+            const sql = `UPDATE employee SET NAME = ${newRole} WHERE id = ${id}`
+            pool.query(sql), [newRole, id], (err, queryResult => {
+                if (err) {
+                    console.error('Error updating employee information');
+                } else {
+                    console.log('Employee information successfully updated')
+                }
+            })
+        })
+}
 
 
 module.exports = {viewAllDepartments, viewAllEmployees, viewAllRoles, addDepartment, addRole, addEmployee, updateEmployeeRole}
