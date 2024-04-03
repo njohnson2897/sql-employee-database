@@ -1,8 +1,10 @@
-const { default: inquirer } = require("inquirer");
+const inquirer = require("inquirer");
+const { initPrompt } = require('../index.js')
+console.log(initPrompt)
 
-function viewAllDepartments() {
+function viewAllDepartments(dbConnection, promptCallback) {
     const sql = 'SELECT * FROM department'
-    pool.query(sql, (err, queryResult) => {
+    dbConnection.query(sql, (err, queryResult) => {
         if (err) {
             console.log("Error displaying department data")
             return;
@@ -10,36 +12,39 @@ function viewAllDepartments() {
             const rows = queryResult.rows;
             console.table(rows);
         }
+        promptCallback();
     })
 };
 
-function viewAllRoles() {
+function viewAllRoles(dbConnection, promptCallback) {
     const sql = 'SELECT * FROM role'
-    pool.query(sql, (err, queryResult) => {
+    dbConnection.query(sql, (err, queryResult) => {
         if (err) {
             console.log("Error displaying role data")
             return;
         } else {
             const rows = queryResult.rows;
             console.table(rows);
-        };
+        }
+        promptCallback();
     });
 };
 
-function viewAllEmployees() {
+function viewAllEmployees(dbConnection, promptCallback) {
     const sql = 'SELECT * FROM employee'
-    pool.query(sql, (err, queryResult) => {
+    dbConnection.query(sql, (err, queryResult) => {
         if (err) {
             console.log("Error displaying employee data")
             return;
         } else {
             const rows = queryResult.rows;
             console.table(rows);
-        };
+        }
+        promptCallback();
     });
 };
 
-function addDepartment() {
+function addDepartment(dbConnection, promptCallback) {
     inquirer
         .prompt([
             {
@@ -51,17 +56,18 @@ function addDepartment() {
         .then((response) =>  {
         const departmentName = response.departmentName;
         const sql = `INSERT INTO department (name) VALUES ${departmentName}`;
-        pool.query(sql), [departmentName], (err, queryResult) => {
+        dbConnection.query(sql), [departmentName], (err, queryResult) => {
             if  (err) {
                 console.error('Error adding department');
             } else {
                 console.log('Department added successfully.');
             }
+            promptCallback();
         };
     });
 };
 
-function addRole() {
+function addRole(dbConnection, promptCallback) {
     inquirer
         .prompt([
             {
@@ -86,17 +92,18 @@ function addRole() {
         const roleDepartment = response.roleDepartment;
         const sql = `INSERT INTO role (title, salary, department) VALUES
          ${roleTitle, roleSalary, roleDepartment}`;
-        pool.query(sql), [roleTitle, roleSalary, roleDepartment], (err, queryResult) => {
+         dbConnection.query(sql), [roleTitle, roleSalary, roleDepartment], (err, queryResult) => {
             if  (err) {
                 console.error('Error adding role');
             } else {
                 console.log('Role added successfully.');
             }
+            promptCallback();
         };
     });
 };
 
-function addEmployee() {
+function addEmployee(dbConnection, promptCallback) {
     inquirer
         .prompt([
             {
@@ -127,17 +134,18 @@ function addEmployee() {
         const employeeManager = response.employeeManager;
         const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
          ${employeeFirstName, employeeLastName, employeeRole, employeeManager}`;
-        pool.query(sql), [employeeFirstName, employeeLastName, employeeRole, employeeManager], (err, queryResult) => {
+         dbConnection.query(sql), [employeeFirstName, employeeLastName, employeeRole, employeeManager], (err, queryResult) => {
             if  (err) {
                 console.error('Error adding employee');
             } else {
                 console.log('Employee added successfully.');
             }
+            promptCallback();
         };
     });
 };
 
-function updateEmployeeRole() {
+function updateEmployeeRole(dbConnection, promptCallback) {
     inquirer
         .prompt([
         {
@@ -155,15 +163,16 @@ function updateEmployeeRole() {
             const id = response.id;
             const newRole = response.newRole;
             const sql = `UPDATE employee SET NAME = ${newRole} WHERE id = ${id}`
-            pool.query(sql), [newRole, id], (err, queryResult => {
+            dbConnection.query(sql), [newRole, id], (err, queryResult => {
                 if (err) {
                     console.error('Error updating employee information');
                 } else {
                     console.log('Employee information successfully updated')
                 }
-            })
-        })
-}
+                promptCallback();
+            });
+        });
+};
 
 
 module.exports = {viewAllDepartments, viewAllEmployees, viewAllRoles, addDepartment, addRole, addEmployee, updateEmployeeRole}

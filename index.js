@@ -10,7 +10,7 @@ const pool = new Pool(
         host: 'localhost',
         database: 'organization_db'
     },
-)
+);
 
 pool.connect()
     .then(() => {
@@ -31,30 +31,25 @@ function initPrompt() {
         ])
         .then((response) => {
             if (response.menu  ===  'View all departments') {
-                viewAllDepartments();
-                initPrompt();
+                viewAllDepartments(pool, initPrompt);
             } else if (response.menu  ===  'View all roles') {
-                viewAllRoles();
-                initPrompt();
+                viewAllRoles(pool, initPrompt);
             } else if (response.menu === 'View all employees') {
-                viewAllEmployees();
-                initPrompt();
+                viewAllEmployees(pool, initPrompt);
             } else if (response.menu === 'Add a department') {
-                addDepartment();
-                initPrompt();
+                addDepartment(pool, initPrompt);
             } else if (response.menu === 'Add a role') {
-                addRole();
-                initPrompt();
+                addRole(pool, initPrompt);
             } else if (response.menu === 'Add an employee') {
-                addEmployee();
-                initPrompt();
+                addEmployee(pool, initPrompt);
             } else if (response.menu === 'Update an employee role') {
-                updateEmployeeRole();
-                initPrompt();
+                updateEmployeeRole(pool, initPrompt);
             }
         });
-        
 }
+
+
+module.exports = { initPrompt }
 
 
 
