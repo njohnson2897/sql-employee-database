@@ -52,7 +52,7 @@ function initPrompt() {
                         initPrompt() 
                     }
                     })
-            // } else if (response.menu  ===  'View all employees') {
+            // } else if (response.menu === 'View all employees') {
             //     const sql = 'SELECT * FROM employee'
             //     pool.query(sql, (err, queryResult) => {
             //         if (err) {
@@ -64,7 +64,17 @@ function initPrompt() {
             //             initPrompt() 
             //         }
             //         })
-            }
+            // } else if (response.menu === 'Add a department') {
+
+            // } else if (response.menu === 'Add a role') {
+
+            // } else if (response.menu === 'Add an employee') {
+
+            // } else if (response.menu === 'Add a department') {
+
+            // } else if (response.menu === 'Update an employee role') {
+
+            // }
         });
         
 }
