@@ -55,15 +55,15 @@ function addDepartment(dbConnection, promptCallback) {
         ])
         .then((response) =>  {
         const departmentName = response.departmentName;
-        const sql = `INSERT INTO department (name) VALUES ${departmentName}`;
-        dbConnection.query(sql), [departmentName], (err, queryResult) => {
+        const sql = 'INSERT INTO department (name) VALUES ($1)';
+        dbConnection.query(sql, [departmentName], (err, queryResult) => {
             if  (err) {
                 console.error('Error adding department');
             } else {
                 console.log('Department added successfully.');
             }
             promptCallback();
-        };
+        });
     });
 };
 
@@ -90,16 +90,15 @@ function addRole(dbConnection, promptCallback) {
         const roleTitle = response.roleTitle;
         const roleSalary = response.roleSalary;
         const roleDepartment = response.roleDepartment;
-        const sql = `INSERT INTO role (title, salary, department) VALUES
-         ${roleTitle, roleSalary, roleDepartment}`;
-         dbConnection.query(sql), [roleTitle, roleSalary, roleDepartment], (err, queryResult) => {
+        const sql = 'INSERT INTO role (title, salary, department) VALUES  ($1, $2, $3)';
+         dbConnection.query(sql, [roleTitle, roleSalary, roleDepartment], (err, queryResult) => {
             if  (err) {
                 console.error('Error adding role');
             } else {
                 console.log('Role added successfully.');
             }
             promptCallback();
-        };
+        });
     });
 };
 
@@ -132,16 +131,15 @@ function addEmployee(dbConnection, promptCallback) {
         const employeeLastName = response.employeeLastName;
         const employeeRole = response.employeeRole;
         const employeeManager = response.employeeManager;
-        const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
-         ${employeeFirstName, employeeLastName, employeeRole, employeeManager}`;
-         dbConnection.query(sql), [employeeFirstName, employeeLastName, employeeRole, employeeManager], (err, queryResult) => {
+        const sql = 'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ($1, $2, $3, $4)';
+         dbConnection.query(sql, [employeeFirstName, employeeLastName, employeeRole, employeeManager], (err, queryResult) => {
             if  (err) {
                 console.error('Error adding employee');
             } else {
                 console.log('Employee added successfully.');
             }
             promptCallback();
-        };
+        });
     });
 };
 
@@ -162,15 +160,15 @@ function updateEmployeeRole(dbConnection, promptCallback) {
         .then((response) => {
             const id = response.id;
             const newRole = response.newRole;
-            const sql = `UPDATE employee SET NAME = ${newRole} WHERE id = ${id}`
-            dbConnection.query(sql), [newRole, id], (err, queryResult => {
+            const sql = 'UPDATE employee SET NAME = $1 WHERE id = $2';
+            dbConnection.query(sql, [newRole, id], (err, queryResult => {
                 if (err) {
                     console.error('Error updating employee information');
                 } else {
                     console.log('Employee information successfully updated')
                 }
                 promptCallback();
-            });
+            }));
         });
 };
 
