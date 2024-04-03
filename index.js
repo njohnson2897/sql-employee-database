@@ -40,8 +40,10 @@ function initPrompt() {
                 initPrompt();
             } else if (response.menu === 'Add a department') {
                 addDepartment();
+                initPrompt();
             } else if (response.menu === 'Add a role') {
-
+                addRole();
+                initPrompt();
             } else if (response.menu === 'Add an employee') {
 
 

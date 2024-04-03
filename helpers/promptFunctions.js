@@ -64,6 +64,42 @@ function addDepartment() {
     });
 };
 
+function addRole() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'roleTitle',
+                message: 'Enter a name for the role'
+            },
+            {
+                type: 'input',
+                name: 'roleSalary',
+                message: 'Enter a name for the role'
+            },
+            // {
+            //     type: 'input',
+            //     name: 'roleDepartment',
+            //     message: ''
+            // },
+        ])
+        .then((response) =>  {
+        const roleTitle = response.roleTitle;
+        const roleSalary = response.roleSalary;
+        const roleDepartment = response.roleDepartment;
+        const sql = `INSERT INTO role (title, salary, department) VALUES
+         ${response.roleTitle, response.roleSalary, response.roleDepartment}`;
+        pool.query(sql), [departmentName], (err, queryResult) => {
+            if  (err) {
+                console.error('Error adding role');
+            } else {
+                console.log('Role added successfully.');
+            }
+        };
+    });
+};
 
 
-module.exports = {viewAllDepartments, viewAllEmployees, viewAllRoles, addDepartment}
+
+
+module.exports = {viewAllDepartments, viewAllEmployees, viewAllRoles, addDepartment, addRole, addEmployee, updateEmployeeRole}
