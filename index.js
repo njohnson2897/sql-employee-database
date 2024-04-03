@@ -1,5 +1,6 @@
 const { Pool }  = require('pg');
 const inquirer = require('inquirer');
+const { addDepartment } = require('./helpers/promptFunctions');
 
 const pool = new Pool(
     {
@@ -38,19 +39,13 @@ function initPrompt() {
                 viewAllEmployees();
                 initPrompt();
             } else if (response.menu === 'Add a department') {
-
-
+                addDepartment();
             } else if (response.menu === 'Add a role') {
-                const sql = 'SELECT * FROM employee'
 
             } else if (response.menu === 'Add an employee') {
-                const sql = 'SELECT * FROM employee'
 
-            } else if (response.menu === 'Add a department') {
-                const sql = 'SELECT * FROM employee'
 
             } else if (response.menu === 'Update an employee role') {
-                const sql = 'SELECT * FROM employee'
 
             }
         });
