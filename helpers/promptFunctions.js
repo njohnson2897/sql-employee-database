@@ -66,7 +66,7 @@ function addDepartment(dbConnection, promptCallback) {
 };
 
 function addRole(dbConnection, promptCallback) {
-    const sql =  'SELECT * FROM department';
+    const sql =  'SELECT id AS value, name FROM department';
 
     dbConnection.query(sql, (err, data) => {
         if (err) {
@@ -75,6 +75,7 @@ function addRole(dbConnection, promptCallback) {
         }
 
     const departmentChoices = data.rows
+    console.log(departmentChoices)
     
     inquirer
         .prompt([
@@ -91,7 +92,7 @@ function addRole(dbConnection, promptCallback) {
             {
                 type: 'list',
                 name: 'roleDepartment',
-                message: 'Enter the department this role belongs to',
+                message: 'Select the department this role belongs to',
                 choices: departmentChoices
             },
         ])
