@@ -26,7 +26,7 @@ function initPrompt() {
                 message: 'What would you like to do?',
                 name: 'menu',
                 choices: ['View all departments', 'View all roles', 'View all employees',
-                'Add a department', 'Add a role', 'Add an employee', 'Update an employee role'],
+                'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Exit'],
             }
         ])
         .then((response) => {
@@ -44,6 +44,9 @@ function initPrompt() {
                 addEmployee(pool, initPrompt);
             } else if (response.menu === 'Update an employee role') {
                 updateEmployeeRole(pool, initPrompt);
+            } else if (response.menu === 'Exit') {
+                console.log('Exiting the application');
+                process.exit();
             }
         });
 }
