@@ -1,6 +1,4 @@
 const inquirer = require("inquirer");
-const { initPrompt } = require('../index.js')
-console.log(initPrompt)
 
 function viewAllDepartments(dbConnection, promptCallback) {
     const sql = 'SELECT * FROM department'
@@ -68,15 +66,15 @@ function addDepartment(dbConnection, promptCallback) {
 };
 
 function addRole(dbConnection, promptCallback) {
-    const sql =  'SELECT name FROM department';
+    const sql =  'SELECT * FROM department';
 
-    dbConnection.query(sql, (err, results) => {
+    dbConnection.query(sql, (err, data) => {
         if (err) {
             console.error('Error gathering departments')
             return;
         }
 
-    const departmentChoices = results.rows
+    const departmentChoices = data.rows
     
     inquirer
         .prompt([
@@ -93,7 +91,7 @@ function addRole(dbConnection, promptCallback) {
             {
                 type: 'list',
                 name: 'roleDepartment',
-                message: 'Choose the department that this role will belong to',
+                message: 'Enter the department this role belongs to',
                 choices: departmentChoices
             },
         ])
@@ -115,29 +113,49 @@ function addRole(dbConnection, promptCallback) {
 };
 
 function addEmployee(dbConnection, promptCallback) {
+    const sql1 =  'SELECT title AS name FROM role';
+
+    dbConnection.query(sql1, (err, data) => {
+        if (err) {
+            console.error('Error gathering roles')
+            return;
+        }
+
+    const roleChoices = data.rows
+
+    const sql2 =  `SELECT CONCAT(first_name, ' ', last_name) AS name FROM employee`;
+
+    dbConnection.query(sql2, (err, data) => {
+        if (err) {
+            console.error('Error gathering employees')
+            return;
+        }
+
+    const managerChoices = data.rows
+
     inquirer
         .prompt([
             {
                 type: 'input',
                 name: 'employeeFirstName',
-                message: 'Enter a name for the role'
+                message: 'Enter a first name of the employee'
             },
             {
                 type: 'input',
                 name: 'employeeLastName',
-                message: 'Enter a name for the role'
+                message: 'Enter a last name of the employee'
             },
             {
                 type: 'list',
                 name: 'employeeRole',
                 message: 'Choose the role that this employee will fulfill',
-                choices: []
+                choices: roleChoices
             },
             {
-                type: 'input',
+                type: 'list',
                 name: 'employeeManager',
                 message: 'Choose the manager of this employee',
-                choices: []
+                choices: managerChoices
             },
         ])
         .then((response) =>  {
@@ -154,6 +172,8 @@ function addEmployee(dbConnection, promptCallback) {
             }
             promptCallback();
         });
+        });
+    });
     });
 };
 
