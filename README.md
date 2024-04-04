@@ -15,7 +15,7 @@ Following the completion of all of the prompts, an .svg file will be generated i
 ![sample view table command screenshot](./images/database-project-view-all-employees-screenshot.JPG)
 
 The following is a link to a walkthrough video that demonstrates all of the functionality of the program:
-[Database Application Walkthrough Video]()
+[Database Application Walkthrough Video](https://drive.google.com/file/d/1UaP9vUayvrRgjvsJuZOFDo3OkUKrkKmv/view)
 
 ## Contributing
 N/A
