@@ -1,8 +1,10 @@
+// imports the necessary modules
 const { Pool }  = require('pg');
 const inquirer = require('inquirer');
 const { addDepartment, addEmployee, viewAllDepartments, viewAllEmployees, viewAllRoles,
 addRole, updateEmployeeRole } = require('./helpers/promptFunctions');
 
+// instantiates a new pool with database information to use to connect later on
 const pool = new Pool(
     {
         user:  'postgres',
@@ -12,12 +14,14 @@ const pool = new Pool(
     },
 );
 
+// connects to the database using the pool information above
 pool.connect()
     .then(() => {
         console.log('Connected to the organization_db database.');
         initPrompt();
         });
 
+// function that initiates the line of inquirer prompts, called when the user connects to the database
 function initPrompt() {
     inquirer
         .prompt([
@@ -29,6 +33,7 @@ function initPrompt() {
                 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Exit'],
             }
         ])
+        // conditional logic invoking a specific function based on the menu choice of the user
         .then((response) => {
             if (response.menu  ===  'View all departments') {
                 viewAllDepartments(pool, initPrompt);
@@ -45,6 +50,7 @@ function initPrompt() {
             } else if (response.menu === 'Update an employee role') {
                 updateEmployeeRole(pool, initPrompt);
             } else if (response.menu === 'Exit') {
+                // https://stackoverflow.com/questions/75291250/how-can-i-exit-inquirer-prompt-based-on-answer
                 console.log('Exiting the application');
                 process.exit();
             }

@@ -7,7 +7,7 @@ CREATE TABLE department (
     name VARCHAR(30) UNIQUE NOT NULL
 );
 
--- What happens if you set ON DELETE SET NULL for a NOT NULL property?
+-- establishes the foreign  key relationship between role(department) and department(id)
 CREATE TABLE role (
     id SERIAL PRIMARY KEY,
     title VARCHAR(30) UNIQUE NOT NULL,
@@ -17,7 +17,8 @@ CREATE TABLE role (
     REFERENCES department(id)
 );
 
--- Is it a foreign key if it references the same table?
+-- establishes two foreign key relationships: employee(role_id) and role(id) as well as
+-- employee(manager_id) and employee(id)
 CREATE TABLE employee (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,

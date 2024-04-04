@@ -1,3 +1,4 @@
+-- seed data for the department table
 INSERT INTO department (name) VALUES
 ('Engineering'),
 ('Marketing'),
@@ -5,6 +6,7 @@ INSERT INTO department (name) VALUES
 ('Human Resources'),
 ('Finance');
 
+-- seed data for the role table
 INSERT INTO role (title, salary, department)  VALUES
 ('Software Engineer', 85000, 1),
 ('Product Manager', 100000, 1),
@@ -13,6 +15,7 @@ INSERT INTO role (title, salary, department)  VALUES
 ('HR Director', 95000, 4),
 ('Financial Analyst', 90000, 5);
 
+-- seed data for the employee table
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
 ('John', 'Smith', 1, NULL),
 ('Jane', 'Smithe', 2, 1),
